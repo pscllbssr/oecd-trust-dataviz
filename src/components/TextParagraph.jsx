@@ -1,0 +1,1 @@
+export const TextParagraph = ({children}) => <p className={'text-left mb-2'}>{children}</p>

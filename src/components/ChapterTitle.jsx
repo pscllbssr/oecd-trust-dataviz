@@ -1,0 +1,1 @@
+export const ChapterTitle = ({children}) => <h2 className={'font-bold text-lg'}>{children}</h2>
