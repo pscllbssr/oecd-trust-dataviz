@@ -1,1 +1,1 @@
-export const TextParagraph = ({children}) => <p className={'text-left mb-2'}>{children}</p>
+export const TextParagraph = ({children}) => <p className={'text-left mb-4 text-base'}>{children}</p>

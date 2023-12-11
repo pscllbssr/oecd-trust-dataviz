@@ -1,1 +1,1 @@
-export const ChapterTitle = ({children}) => <h2 className={'font-bold text-lg'}>{children}</h2>
+export const ChapterTitle = ({children}) => <h2 className={'font-bold text-lg mb-2'}>{children}</h2>

@@ -6,9 +6,12 @@ import {easeCubicInOut} from "d3-ease";
 import {groups} from 'd3-array';
 import {Axis} from "./Axis";
 import {axisBottom, axisLeft} from "d3-axis";
+import {GridLines} from "./GridLines.jsx";
 
+const MARGIN_BOTTOM = 30
+const MARGIN_LEFT = 20
 
-export const SmallLines = ({width, height, data, xScale, yScale, lineGenerator, highlighted = []}) => {
+export const SmallLines = ({width, height, data, xScale, yScale, lineGenerator, highlighted = [], hideX = true, hideY = true, highlightColour = "black"}) => {
 
     const ref = useRef()
     const chartCanvas = select(ref.current).select('g.lines')
@@ -28,16 +31,20 @@ export const SmallLines = ({width, height, data, xScale, yScale, lineGenerator, 
             .attr("d", d => lineGenerator(d[1]))
             .attr("fill", "none")
             .attr("class", "line")
-            .attr("stroke", d => highlighted.includes(d[0]) ? "red" : "grey")
+            .attr("stroke", d => highlighted.includes(d[0]) ? highlightColour : "grey")
             .attr("opacity", d => highlighted.includes(d[0]) ? 1 : .2)
             .attr("stroke-width", 1)
             .attr("id", d => d[0])
 
     }, [data, width, highlighted])
 
-    return <svg width={width} height={height} ref={ref}>
+    return <svg width={width} height={height} ref={ref} className={'overflow-visible'}>
+
+        <GridLines scale={yScale} offsetY={0} offsetX={MARGIN_LEFT} axisFunc={axisLeft} ticks={2}
+                   size={width - MARGIN_LEFT}/>
+        <Axis scale={xScale} axisFunc={axisBottom} offsetY={height - MARGIN_BOTTOM} tickFormat={d => hideX ? '' : String(d).substring(2)}/>
+        <Axis scale={yScale} axisFunc={axisLeft} offsetX={MARGIN_LEFT} tickFormat={d => hideY ? '' : `${d}%`} ticks={2}
+              removeDomain={true} tickSize={0}/>
         <g className={'lines'}></g>
-        <Axis scale={xScale} axisFunc={axisBottom} offsetY={height}/>
-        <Axis scale={yScale} axisFunc={axisLeft}/>
     </svg>
 }

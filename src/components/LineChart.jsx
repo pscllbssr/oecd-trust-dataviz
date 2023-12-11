@@ -3,21 +3,26 @@ import {scaleBand, scaleLinear, scaleOrdinal, scaleTime} from "d3-scale";
 import {axisBottom, axisLeft} from "d3-axis";
 import {select} from "d3-selection";
 import {curveLinear, line} from "d3-shape";
-import {transition} from "d3-transition";
 import {easeCubicInOut} from "d3-ease";
 import {groups, range} from 'd3-array';
 import * as PropTypes from "prop-types";
 import {useChartDimensions} from "../hooks/useChartDimensions.js";
 import {Axis} from "./Axis.jsx";
+import 'd3-transition';
+import {GridLines} from "./GridLines.jsx";
+import {YAxisLabel} from "./YAxisLabel.jsx";
+import {XAxisLabel} from "./XAxisLabel.jsx";
 
 const chartSettings = {
     "marginTop": 5,
     "marginRight": 43,
-    "marginBottom": 17,
-    "marginLeft": 30
+    "marginBottom": 43,
+    "marginLeft": 55
 }
 
-export const LineChart = ({data = [], width, height}) => {
+export const LineChart = ({data = [], highlight = [], annotations = [], width, height}) => {
+
+    console.log(annotations)
 
     const [containerRef, dms] = useChartDimensions(chartSettings)
 
@@ -36,8 +41,6 @@ export const LineChart = ({data = [], width, height}) => {
         .y(d => yScale(d.trust_pct))
         .curve(curveLinear);
 
-    const t = transition().duration(100).delay(0)
-
     useEffect(() => {
         if (data.length === 0) return
 
@@ -46,41 +49,51 @@ export const LineChart = ({data = [], width, height}) => {
 
         chartCanvas
             .selectAll(".line")
-            .data(groupedData)
+            .data(groupedData, d => d[0])
             .join("path")
-            //.transition(t)
-            //.ease(easeCubicInOut)
+            //.transition().duration(100).ease(easeCubicInOut)
             .attr("d", d => lineGenerator(d[1]))
             .attr("fill", "none")
             .attr("class", "line")
-            .attr("stroke", "black")
-            .attr("stroke-width", 3)
+            .attr("stroke", d => highlight.length === 0 || highlight.includes(d[0]) ? "black" : "lightgrey")
+            .attr("stroke-width", 2)
             .attr("id", d => d[0])
 
         chartCanvas
             .selectAll(".point")
-            .data(data)
+            .data(data, d => `${d.country}-${d.year}`)
             .join("circle")
             .attr('cx', d => xScale(d.year))
             .attr('cy', d => yScale(d.trust_pct))
-            //.transition(t)
-            //.ease(easeCubicInOut)
+            //.transition(transition().duration(100).ease(easeCubicInOut))
             .attr('r', 3)
-            .attr("fill", "black")
+            .attr("stroke", "white")
+            .attr("fill", d => highlight.length === 0 || highlight.includes(d.country) ? "black" : "lightgrey")
             .attr("class", "point")
-            .attr("stroke", "black")
             .attr("id", d => `${d.country}-${d.year}`)
 
     }, [data, width])
 
-    return <div ref={containerRef} style={{ height: height, width: width }}>
+    return <div ref={containerRef} style={{height: height, width: width}} className={'relative'}>
+        <XAxisLabel>Year</XAxisLabel>
+        <YAxisLabel>Trust</YAxisLabel>
         <svg width={dms.width} height={dms.height}>
-        <g className={'chart'} transform={`translate(${[
-            dms.marginLeft,
-            dms.marginTop
-        ].join(",")})`} />
-        <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}/>
-        <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisBottom}/>
-    </svg></div>
+            <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
+                       size={dms.boundedWidth}/>
+            <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
+                  tickFormat={d => `${d}%`}/>
+            <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft}
+                  axisFunc={axisBottom}/>
+            <g className={'chart'} transform={`translate(${[
+                dms.marginLeft,
+                dms.marginTop
+            ].join(",")})`}/>
+            <g className={'annotations'} transform={`translate(${[
+                dms.marginLeft,
+                dms.marginTop
+            ].join(",")})`}>{annotations.map(a => <text x={xScale(a.x)} y={yScale(a.y)}
+                                                        style={a.style}>{a.text}</text>)} </g>
+        </svg>
+    </div>
 
 }

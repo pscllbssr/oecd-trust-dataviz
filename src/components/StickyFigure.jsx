@@ -12,7 +12,9 @@ export const StickyFigure = ({progress, chartProps}) => {
     const target = useRef(null)
     const [width, height] = useSize(target)
 
-    const filteredData = chartProps?.filterData ? chartProps.filterData(data, progress) : data
+    const filteredData = chartProps?.filterData ? chartProps.filterData(data, progress) : data.filter(d => d.country === 'POL' && d.year === 2006)
+    const annotations = chartProps?.annotations ? chartProps.annotations(progress) : []
+    const highlight = chartProps?.highlight ? chartProps.highlight : []
 
     useEffect(() => {
         csv('trust_data.csv', d => {
@@ -26,6 +28,6 @@ export const StickyFigure = ({progress, chartProps}) => {
 
     return (
         <div ref={target}>
-            <LineChart data={filteredData} width={width} height={width * ASPECT_RATIO}/>
+            <LineChart data={filteredData} width={width} height={width * ASPECT_RATIO} highlight={highlight} annotations={annotations } />
         </div>)
 }
