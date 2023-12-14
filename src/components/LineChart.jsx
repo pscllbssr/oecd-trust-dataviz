@@ -4,7 +4,7 @@ import {axisBottom, axisLeft} from "d3-axis";
 import {select} from "d3-selection";
 import {curveLinear, line} from "d3-shape";
 import {easeCubicInOut} from "d3-ease";
-import {groups, range} from 'd3-array';
+import {groups, range, max} from 'd3-array';
 import * as PropTypes from "prop-types";
 import {useChartDimensions} from "../hooks/useChartDimensions.js";
 import {Axis} from "./Axis.jsx";
@@ -17,10 +17,10 @@ const chartSettings = {
     "marginTop": 5,
     "marginRight": 43,
     "marginBottom": 43,
-    "marginLeft": 55
+    "marginLeft": 50
 }
 
-export const LineChart = ({data = [], highlight = [], annotations = [], width, height}) => {
+export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadingPoint = false, width, height}) => {
 
     console.log(annotations)
 
@@ -51,37 +51,42 @@ export const LineChart = ({data = [], highlight = [], annotations = [], width, h
             .selectAll(".line")
             .data(groupedData, d => d[0])
             .join("path")
-            //.transition().duration(100).ease(easeCubicInOut)
+            .attr("id", d => d[0])
+            .attr("class", "line")
+            .transition()
             .attr("d", d => lineGenerator(d[1]))
             .attr("fill", "none")
-            .attr("class", "line")
             .attr("stroke", d => highlight.length === 0 || highlight.includes(d[0]) ? "black" : "lightgrey")
             .attr("stroke-width", 2)
-            .attr("id", d => d[0])
 
+        // leading point
+        const highlightData = data.filter(d => highlight.includes(d.country) && hasLeadingPoint)
+        const maxYear = max(highlightData, d => d.year)
         chartCanvas
-            .selectAll(".point")
-            .data(data, d => `${d.country}-${d.year}`)
+            .selectAll(".leading-point")
+            .data(highlightData.filter(d => d.year === maxYear), d => `leading-point-${d.country}`)
             .join("circle")
+            //.transition()
             .attr('cx', d => xScale(d.year))
             .attr('cy', d => yScale(d.trust_pct))
             //.transition(transition().duration(100).ease(easeCubicInOut))
-            .attr('r', 3)
-            .attr("stroke", "white")
-            .attr("fill", d => highlight.length === 0 || highlight.includes(d.country) ? "black" : "lightgrey")
-            .attr("class", "point")
+            .attr('r', 4)
+            .attr("stroke", d => highlight.length === 0 || highlight.includes(d.country) ? "black" : "lightgrey")
+            .attr("stroke-width", 2)
+            .attr("fill", d => highlight.length === 0 || highlight.includes(d.country) ? "white" : "lightgrey")
+            .attr("class", "leading-point")
             .attr("id", d => `${d.country}-${d.year}`)
 
     }, [data, width])
 
     return <div ref={containerRef} style={{height: height, width: width}} className={'relative'}>
         <XAxisLabel>Year</XAxisLabel>
-        <YAxisLabel>Trust</YAxisLabel>
+        <YAxisLabel height={dms.boundedHeight}>Trust</YAxisLabel>
         <svg width={dms.width} height={dms.height}>
             <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
                        size={dms.boundedWidth}/>
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
-                  tickFormat={d => `${d}%`}/>
+                  tickFormat={d => `${d}%`} removeDomain={true} ticks={4} tickSize={0}/>
             <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft}
                   axisFunc={axisBottom}/>
             <g className={'chart'} transform={`translate(${[
@@ -92,7 +97,8 @@ export const LineChart = ({data = [], highlight = [], annotations = [], width, h
                 dms.marginLeft,
                 dms.marginTop
             ].join(",")})`}>{annotations.map(a => <text x={xScale(a.x)} y={yScale(a.y)}
-                                                        style={a.style}>{a.text}</text>)} </g>
+                                                        style={a.style}
+                                                        className={'text-sm font-medium'}>{a.text}</text>)} </g>
         </svg>
     </div>
 

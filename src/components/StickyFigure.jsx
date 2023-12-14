@@ -28,6 +28,6 @@ export const StickyFigure = ({progress, chartProps}) => {
 
     return (
         <div ref={target}>
-            <LineChart data={filteredData} width={width} height={width * ASPECT_RATIO} highlight={highlight} annotations={annotations } />
+            <LineChart data={filteredData} width={width} height={width * ASPECT_RATIO} highlight={highlight} annotations={annotations} hasLeadingPoint={chartProps?.hasLeadingPoint} />
         </div>)
 }

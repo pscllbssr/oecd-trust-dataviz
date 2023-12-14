@@ -11,6 +11,31 @@ import {RegionalCharts} from "../components/RegionalCharts";
 const TextWrapper = ({children}) => <section className={'w-full px-4 max-w-[620px]'}>{children}</section>
 
 TextWrapper.propTypes = {children: PropTypes.node};
+
+export const ScrollyStep = ({ step, stepIndex, currentStepIndex, progress}) => {
+
+    console.log(progress, currentStepIndex)
+
+    return <div
+        style={{
+            height: '95vh',
+            borderRight: '10px solid gray',
+            opacity: currentStepIndex === stepIndex ? 1 : 0.2,
+            //marginTop: stepIndex === 0 ? '-50vw' : 0
+        }}
+        className={'z-10 flex flex-col items-center px-4 justify-around'}
+    >
+        {step.content}
+    </div>
+}
+
+ScrollyStep.propTypes = {
+    stepIndex: PropTypes.number,
+    progress: PropTypes.number,
+    currentStepIndex: PropTypes.number,
+    step: PropTypes.any
+};
+
 export const Article = () => {
 
     const [currentStepIndex, setCurrentStepIndex] = useState(null);
@@ -58,24 +83,23 @@ export const Article = () => {
                     government. This is the lowest figure in the OECD's data set on trust in national
                     governments:</TextParagraph>
             </TextWrapper>
-            <div className={'w-full mb-8'}>
-                <div style={{position: 'sticky', top: '12vh'}} className={'flex flex-grow justify-center z-0'}>
+            <div className={'w-full py-8 mb-8 bg-stone-100'}>
+                <div className={'sticky flex flex-grow justify-center z-0 top-24'}>
                     <div className={'max-w-screen-md w-full px-2'}>
                         <StickyFigure progress={progress} chartProps={Steps[currentStepIndex]?.chartProps}
                                       className={'w-full flex flex-grow justify-center'}/>
                     </div>
                 </div>
-                <Scrollama offset={0.5} onStepEnter={onStepEnter} progress debg onStepProgress={onStepProgress}>
+                <Scrollama offset={0.5} onStepEnter={onStepEnter} progress debug onStepProgress={onStepProgress}>
                     {Steps.map((step, stepIndex) => (
                         <Step data={stepIndex} key={stepIndex}>
                             <div
                                 style={{
-                                    height: '95vh',
                                     borderRight: '10px solid gray',
                                     opacity: currentStepIndex === stepIndex ? 1 : 0.2,
                                     //marginTop: stepIndex === 0 ? '-50vw' : 0
                                 }}
-                                className={'z-10 flex flex-col items-center px-4 justify-around'}
+                                className={'z-10 px-4 my-4 flex flex-column justify-center'}
                             >
                                 {step.content}
                             </div>
@@ -86,7 +110,7 @@ export const Article = () => {
             <TextWrapper>
                 <ChapterTitle>Regional Patterns</ChapterTitle>
                 <TextParagraph>How well countries fare in this ranking depends on various factors. On the one hand,
-                    corruption plays a major role, as the example from Poland above shows. But also the wider cultural
+                    corruption plays a major role, as in the polish example above. But also the wider cultural
                     and economic context when it comes to trust in the government and institutions.</TextParagraph>
                 <TextParagraph>The data set also contains a correspondingly large number of regional similarities. In
                     Asia, for example, there is a steady increase, similar to Eastern Europe. In Latin America and

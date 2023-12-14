@@ -11,7 +11,18 @@ import {GridLines} from "./GridLines.jsx";
 const MARGIN_BOTTOM = 30
 const MARGIN_LEFT = 20
 
-export const SmallLines = ({width, height, data, xScale, yScale, lineGenerator, highlighted = [], hideX = true, hideY = true, highlightColour = "black"}) => {
+export const SmallLines = ({
+                               width,
+                               height,
+                               data,
+                               xScale,
+                               yScale,
+                               lineGenerator,
+                               highlighted = [],
+                               hideX = true,
+                               hideY = true,
+                               highlightColour = "black"
+                           }) => {
 
     const ref = useRef()
     const chartCanvas = select(ref.current).select('g.lines')
@@ -39,10 +50,10 @@ export const SmallLines = ({width, height, data, xScale, yScale, lineGenerator, 
     }, [data, width, highlighted])
 
     return <svg width={width} height={height} ref={ref} className={'overflow-visible'}>
-
         <GridLines scale={yScale} offsetY={0} offsetX={MARGIN_LEFT} axisFunc={axisLeft} ticks={2}
                    size={width - MARGIN_LEFT}/>
-        <Axis scale={xScale} axisFunc={axisBottom} offsetY={height - MARGIN_BOTTOM} tickFormat={d => hideX ? '' : String(d).substring(2)}/>
+        <Axis scale={xScale} axisFunc={axisBottom} offsetY={height - MARGIN_BOTTOM}
+              tickFormat={d => hideX ? '' : String(d).substring(0)} ticks={4}/>
         <Axis scale={yScale} axisFunc={axisLeft} offsetX={MARGIN_LEFT} tickFormat={d => hideY ? '' : `${d}%`} ticks={2}
               removeDomain={true} tickSize={0}/>
         <g className={'lines'}></g>
