@@ -1,18 +1,19 @@
 import {TextParagraph} from "../components/TextParagraph";
 import {Scrollama, Step} from "react-scrollama";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {StickyFigure} from "../components/StickyFigure.jsx";
 import {Steps} from "./Steps.jsx";
 import {ChapterTitle} from "../components/ChapterTitle";
 import {ScatterPlotContainer} from "../components/ScatterPlotContainer.jsx";
 import * as PropTypes from "prop-types";
 import {RegionalCharts} from "../components/RegionalCharts";
+import useSize from "@react-hook/size";
 
 const TextWrapper = ({children}) => <section className={'w-full px-4 max-w-[620px]'}>{children}</section>
 
 TextWrapper.propTypes = {children: PropTypes.node};
 
-export const ScrollyStep = ({ step, stepIndex, currentStepIndex, progress}) => {
+export const ScrollyStep = ({step, stepIndex, currentStepIndex, progress}) => {
 
     console.log(progress, currentStepIndex)
 
@@ -40,6 +41,10 @@ export const Article = () => {
 
     const [currentStepIndex, setCurrentStepIndex] = useState(null);
     const [progress, setProgress] = useState(0);
+    const articleRef = useRef()
+    const [width, height] = useSize(articleRef)
+    const mobile = width < 768
+    const scrollyOffset = mobile ? 0.6 : 0.35
 
     // This callback fires when a Step hits the offset threshold. It receives the
     // data prop of the step, which in this demo stores the index of the step.
@@ -65,7 +70,7 @@ export const Article = () => {
                     Albisser</a>, December 2023.</p>
             </div>
         </header>
-        <article className={'flex flex-col items-center py-8'}>
+        <article className={'flex flex-col items-center py-8'} ref={articleRef}>
             <TextWrapper>
                 <TextParagraph>A seemingly normal Tuesday evening in early autumn 2006. The thermometer in Warsaw today
                     showed 22.6° degrees, the air is slowly cooling down. Quite a few Poles are probably drawn indoors,
@@ -83,23 +88,25 @@ export const Article = () => {
                     government. This is the lowest figure in the OECD's data set on trust in national
                     governments:</TextParagraph>
             </TextWrapper>
-            <div className={'w-full py-8 mb-8 bg-stone-100'}>
-                <div className={'sticky flex flex-grow justify-center z-0 top-24'}>
-                    <div className={'max-w-screen-md w-full px-2'}>
-                        <StickyFigure progress={progress} chartProps={Steps[currentStepIndex]?.chartProps}
-                                      className={'w-full flex flex-grow justify-center'}/>
+            <section className={'bg-stone-100 w-full flex justify-center'}>
+            <div className={'w-full py-8 mb-8 relative max-w-[1024px]'}>
+                <div
+                    className={'sticky flex flex-grow justify-center z-[1] py-4 top-0 bg-stone-100 shadow-md shadow-stone-100 md:justify-end md:ml-96 md:top-24 md:bg-none'}>
+                    <div className={'max-w-screen-md w-full px-2 z-10'}>
+                        <StickyFigure progress={progress} chartProps={Steps[currentStepIndex]?.chartProps}/>
                     </div>
                 </div>
-                <Scrollama offset={0.5} onStepEnter={onStepEnter} progress debug onStepProgress={onStepProgress}>
+                <Scrollama offset={scrollyOffset} onStepEnter={onStepEnter} progress debug
+                           onStepProgress={onStepProgress}>
                     {Steps.map((step, stepIndex) => (
                         <Step data={stepIndex} key={stepIndex}>
                             <div
                                 style={{
-                                    borderRight: '10px solid gray',
+                                    //borderRight: '10px solid gray',
                                     opacity: currentStepIndex === stepIndex ? 1 : 0.2,
                                     //marginTop: stepIndex === 0 ? '-50vw' : 0
                                 }}
-                                className={'z-10 px-4 my-4 flex flex-column justify-center'}
+                                className={'px-4 my-4 flex flex-col justify-center items-center md:w-96'}
                             >
                                 {step.content}
                             </div>
@@ -107,6 +114,7 @@ export const Article = () => {
                     ))}
                 </Scrollama>
             </div>
+            </section>
             <TextWrapper>
                 <ChapterTitle>Regional Patterns</ChapterTitle>
                 <TextParagraph>How well countries fare in this ranking depends on various factors. On the one hand,
@@ -154,6 +162,22 @@ export const Article = () => {
                 </TextParagraph>
             </TextWrapper>
         </article>
+        <footer>
+            <TextWrapper>
+                <ChapterTitle>Methods & Sources</ChapterTitle>
+                <TextParagraph>
+                    The data on trust in government is provided by the OECD and can be downloaded via their <a
+                    href={'https://data.oecd.org/gga/trust-in-government.htm'} target={'_blank'}>data portal</a>.
+                </TextParagraph>
+                <TextParagraph>
+                    The Democracy index is published yearly by the Economist Intelligence Unit, a research and analysis
+                    division of the same organistion which also publishes "The Economist". Data are collected and
+                    republished by the Swedish NPO Gapminder and can be downloaded via <a
+                    href={'https://ourworldindata.org/grapher/democracy-index-eiu'} target={'_blank'}>Our World in
+                    Data</a>
+                </TextParagraph>
+            </TextWrapper>
+        </footer>
 
 
     </>
