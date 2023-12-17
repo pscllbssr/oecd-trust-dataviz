@@ -7,7 +7,7 @@ import {ScatterPlot} from "./ScatterPlot";
 const ASPECT_RATIO = 0.666
 const X_LABEL = {
     'democracy_eiu': 'Democracy-Index',
-    'gdp': 'GDP per capita',
+    'gdp': 'GDP per capita (in USD)',
 }
 
 const ANNOTATIONS = {
@@ -45,13 +45,16 @@ const ANNOTATIONS = {
     ],
 }
 
+const X_FORMAT = {
+    'gdp': d => `${d/1000}k`,
+    'democracy_eiu': d => `${d}`
+}
+
 export const ScatterPlotContainer = ({xKey = 'gdp'}) => {
 
     const [data, setData] = useState([]);
     const target = useRef(null)
     //const [xKey, setXKey] = useState('gdp')
-
-    const filteredData = data
 
     useEffect(() => {
         csv('scatterplot.csv', d => {
@@ -72,7 +75,7 @@ export const ScatterPlotContainer = ({xKey = 'gdp'}) => {
             </div>*/}
             <div className={'w-full flex justify-center mt-4'}>
                 <div ref={target} className={'mx-2 mb-8 max-w-screen-md w-full aspect-[16/9] relative'}>
-                    <ScatterPlot data={data} xAcc={d => d[xKey]} xAxisLabel={X_LABEL[xKey]} annotations={ANNOTATIONS[xKey]}/>
+                    <ScatterPlot data={data} xAcc={d => d[xKey]} xAxisLabel={X_LABEL[xKey]} annotations={ANNOTATIONS[xKey]} xDomain={xKey === 'gdp' ? [0, 121000] : [0,10]} xTickFormat={X_FORMAT[xKey]}/>
                 </div>
             </div>
         </>)

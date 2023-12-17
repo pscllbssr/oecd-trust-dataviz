@@ -1,0 +1,1 @@
+export const ChartTitle = ({children}) => <h3 className={'font-bold text-md mb-2'}>{children}</h3>

@@ -12,6 +12,7 @@ import 'd3-transition';
 import {GridLines} from "./GridLines.jsx";
 import {YAxisLabel} from "./YAxisLabel.jsx";
 import {XAxisLabel} from "./XAxisLabel.jsx";
+import {DataColorGradient} from "./DataColorGradient.jsx";
 
 const chartSettings = {
     "marginTop": 5,
@@ -56,8 +57,8 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
             .transition()
             .attr("d", d => lineGenerator(d[1]))
             .attr("fill", "none")
-            .attr("stroke", d => highlight.length === 0 || highlight.includes(d[0]) ? "black" : "lightgrey")
-            .attr("stroke-width", 2)
+            .attr("stroke", d => highlight.length === 0 || highlight.includes(d[0]) ? "url(#line-gradient)" : "lightgrey")
+            .attr("stroke-width", d => highlight.length === 0 || highlight.includes(d[0]) ? 3 : 2)
 
         // leading point
         const highlightData = data.filter(d => highlight.includes(d.country) && hasLeadingPoint)
@@ -83,6 +84,7 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
         <XAxisLabel>Year</XAxisLabel>
         <YAxisLabel height={dms.boundedHeight}>Trust</YAxisLabel>
         <svg width={dms.width} height={dms.height}>
+            <DataColorGradient />
             <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
                        size={dms.boundedWidth}/>
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}

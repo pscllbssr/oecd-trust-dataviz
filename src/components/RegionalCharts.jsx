@@ -5,6 +5,7 @@ import {csv} from "d3-fetch";
 import {scaleLinear} from "d3-scale";
 import {select} from "d3-selection";
 import {curveLinear, line} from "d3-shape";
+import './RegionalCharts.css'
 
 const SmallMultiple = ({children}) => <div className={'aspect-[4/3]'}>{children}</div>
 
@@ -13,62 +14,62 @@ const regions = [
         title: 'North America',
         highlighted: ['USA', 'CAN'],
         xOffset: '',
-        highlightColour: 'rgb(227, 26, 28)'
+        highlightColour: 'black'//'rgb(227, 26, 28)'
     },
     {
         title: 'Northern Europe',
-        highlighted: ['NOR', 'SWE'],
+        highlighted: ['NOR', 'SWE', 'DNK', 'FIN', 'GBR', 'ISL', 'LVA', 'LTU', 'EST'], // POST SOVIET?
         xOffset: '',
-        highlightColour: "rgb(51, 160, 44)"
+        highlightColour: 'black'//"rgb(51, 160, 44)"
     },
     {
         title: 'Asia',
-        highlighted: ['JPN', 'KOR', 'ISR', 'TUR'], // TUR?
+        highlighted: ['JPN', 'KOR', 'ISR'], //, 'TUR'], // TUR?
         xOffset: '',
-        highlightColour: "rgb(31, 120, 180)"
+        highlightColour: 'black'//"rgb(31, 120, 180)"
 
     },
     {
         title: 'Western Europe',
-        highlighted: ['DEU', 'CHE', 'FRA'],
+        highlighted: ['DEU', 'CHE', 'FRA', 'AUT', 'BEL', 'LUX', 'NLD'],
         xOffset: 'col-start-2',
-        highlightColour: "rgb(51, 160, 44)"
+        highlightColour: 'black'//"rgb(51, 160, 44)"
     },
     {
         title: 'Eastern Europe',
-        highlighted: ['POL', 'RUS', 'SVK', 'HUN', 'CZE', 'SVN'], // RUS?
+        highlighted: ['POL', 'RUS', 'SVK', 'HUN', 'CZE', 'SVN'], // RUS? POST-SOVIET
         xOffset: '',
-        highlightColour: "rgb(51, 160, 44)"
+        highlightColour: 'black'//"rgb(51, 160, 44)"
     },
     {
         title: 'Latin America',
         highlighted: ['MEX', 'COL', 'CRI', 'CHL', 'BRA'],
         xOffset: '',
-        highlightColour: 'rgb(227, 26, 28)'
+        highlightColour: 'black'//'rgb(227, 26, 28)'
     },
     {
         title: 'Southern Europe',
-        highlighted: ['ITA', 'ESP', 'GRC', 'PRT'],
+        highlighted: ['ITA', 'ESP', 'GRC', 'PRT', 'SVN'], // POST-SOVIET
         xOffset: '',
-        highlightColour: "rgb(51, 160, 44)"
+        highlightColour: 'black'//"rgb(51, 160, 44)"
     },
     {
         title: 'Australia & New Zealand',
         highlighted: ['AUS', 'NZL'],
         xOffset: '',
-        highlightColour: "rgb(31, 120, 180)"
+        highlightColour: 'black'//"rgb(31, 120, 180)"
     },
 ]
 
 const MARGIN_BOTTOM = 30
-const MARGIN_LEFT = 20
+const MARGIN_LEFT = 0
 
 export const RegionalCharts = () => {
 
     const [data, setData] = useState([]);
     const target = useRef(null)
     const [width, height] = useSize(target)
-    const chartHeight = width / 4 * 3
+    const chartHeight = width * 0.9
 
     const xScale = useMemo(() => (scaleLinear()
         .domain([2006, 2022])
@@ -92,20 +93,20 @@ export const RegionalCharts = () => {
         }).then(data => setData(data))
     }, [])
 
-    return <div className={'overflow-x-scroll w-full p-4 max-w-screen-md w-full md:overflow-x-auto mb-8'}>
-        <div className={'grid grid-cols-6 grid-rows-3 gap-4 min-w-[600px]'}>
+    return <div className={'overflow-x-scroll w-full max-w-screen-lg w-full md:overflow-x-visible mb-8 py-4 pl-12 pr-4'}>
+        <div className={'grid grid-cols-6 grid-rows-3 gap-x-6 gap-y-1 min-w-[600px]'}>
             {
                 regions.map((d, i) => (
-                    <div className={`col-span-2 ${d.xOffset}`} ref={target}>
+                    <div className={`col-span-2 ${d.xOffset} region-${i}`} ref={target}>
                         <SmallMultiple>
-                            <h3 className={'pb-4'}>{d.title}</h3>
+                            <h3 className={'pb-2 text-center'}>{d.title}</h3>
                             <SmallLines
                                 data={data} width={width} xScale={xScale} yScale={yScale} lineGenerator={lineGenerator}
                                 highlighted={d.highlighted}
                                 height={chartHeight}
-                                hideX={![0].includes(i)}
-                                hideY={![0].includes(i)}
-                                highlightColour={d.highlightColour}
+                                hideX={false} // ![0, 3, 5].includes(i)}
+                                hideY={![0, 3, 5].includes(i)}
+                                //highlightColour={d.highlightColour}
                             />
                         </SmallMultiple>
                     </div>

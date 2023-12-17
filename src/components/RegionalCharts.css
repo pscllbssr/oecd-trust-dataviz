@@ -1,0 +1,38 @@
+.regional-lines path#RUS,
+.regional-lines path#POL,
+.regional-lines path#HUN,
+.regional-lines path#CZE,
+.regional-lines path#SVK,
+.regional-lines path#SVN,
+.regional-lines path#LVA,
+.regional-lines path#EST,
+.regional-lines path#LTU{
+    stroke-dasharray: 5 2;
+}
+/*
+.region-4 .regional-lines path#POL,
+.region-4 .regional-lines path#CZE,
+.region-4 .regional-lines path#SVK,
+.region-4 .regional-lines path#SVN,
+.region-4 .regional-lines path#HUN,
+.region-2 .regional-lines path#JPN,
+.region-2 .regional-lines path#KOR,
+.region-2 .regional-lines path#ISR
+{
+    @apply stroke-blue-500
+}
+
+.region-5 .regional-lines path#MEX,
+.region-5 .regional-lines path#COL,
+.region-5 .regional-lines path#CRI,
+.region-5 .regional-lines path#CHL,
+.region-5 .regional-lines path#BRA,
+.region-6 .regional-lines path#ITA,
+.region-6 .regional-lines path#ESP,
+.region-6 .regional-lines path#SVN,
+.region-6 .regional-lines path#PRT,
+.region-6 .regional-lines path#GRC
+{
+    @apply stroke-red-500
+}
+*/

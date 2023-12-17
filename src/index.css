@@ -6,3 +6,22 @@
   writing-mode: vertical-lr;
   -webkit-writing-mode: vertical-lr;
 }
+
+
+@layer base {
+  a {
+    @apply underline;
+  }
+  a:hover{
+    @apply no-underline;
+  }
+}
+
+
+
+@layer base {
+  b {
+    @apply font-semibold;
+  }
+}
+
