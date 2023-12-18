@@ -66,7 +66,7 @@ ScrollyStep.propTypes = {
 };
 
 const ChartDescription = ({children}) => <div
-    className={'text-stone-400 font-light text-xs mx-8 -mt-4 mb-8 md:mx-0'}>{children}</div>
+    className={'text-stone-400 font-light text-xs md:mx-8 -mt-4 mb-8 md:mx-0 w-full'}>{children}</div>
 
 ChartDescription.propTypes = {children: PropTypes.node};
 
@@ -202,7 +202,7 @@ export const Article = () => {
             <TextWrapper>
                 <ChartDescription>Note: Confidence in government is also measured in the EIU democracy-index, hence
                     there
-                    might be a slight autocorrelation in here. However it is one question among lots of others - so I
+                    might be a slight autocorrelation in here. However it is one <a href={'https://docs.google.com/spreadsheets/d/1d0noZrwAWxNBTDSfDgG06_aLGWUz4R6fgDhRaUZbDzE/edit#gid=935776888'} target={'_blank'}>among more than 60 questions</a> - so I
                     consider it neglectable. For every country the latest available measure is taken.</ChartDescription>
                 <ChapterTitle>The cost of trust</ChapterTitle>
                 <TextParagraph>A look at the gross domestic product also shows that economic factors play a role.

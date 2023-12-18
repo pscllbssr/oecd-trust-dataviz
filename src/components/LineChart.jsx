@@ -82,9 +82,12 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
 
     return <div ref={containerRef} style={{height: height, width: width}} className={'relative'}>
         <XAxisLabel>Year</XAxisLabel>
-        <YAxisLabel height={dms.boundedHeight}>Trust</YAxisLabel>
+        <YAxisLabel height={dms.boundedHeight}>
+            <div className={'flex justify-between'}><span
+                className={'text-[#b35806] pt-4 font-light'}>← Low</span><span>Trust</span><span className={'text-[#313695] pb-4 font-light'}>High →</span></div>
+        </YAxisLabel>
         <svg width={dms.width} height={dms.height}>
-            <DataColorGradient />
+            <DataColorGradient/>
             <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
                        size={dms.boundedWidth}/>
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}

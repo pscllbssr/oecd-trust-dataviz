@@ -8,6 +8,7 @@ import {Axis} from "./Axis";
 import {axisBottom, axisLeft} from "d3-axis";
 import {GridLines} from "./GridLines.jsx";
 import {DataColorGradient} from "./DataColorGradient";
+import {YAxisLabel} from "./YAxisLabel";
 
 const MARGIN_BOTTOM = 30
 const MARGIN_LEFT = 0

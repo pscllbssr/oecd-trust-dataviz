@@ -6,8 +6,9 @@ import {scaleLinear} from "d3-scale";
 import {select} from "d3-selection";
 import {curveLinear, line} from "d3-shape";
 import './RegionalCharts.css'
+import {YAxisLabel} from "./YAxisLabel.jsx";
 
-const SmallMultiple = ({children}) => <div className={'aspect-[4/3]'}>{children}</div>
+const SmallMultiple = ({children}) => <div className={'aspect-[4/3] relative'}>{children}</div>
 
 const regions = [
     {
@@ -100,6 +101,8 @@ export const RegionalCharts = () => {
                     <div className={`col-span-2 ${d.xOffset} region-${i}`} ref={target}>
                         <SmallMultiple>
                             <h3 className={'pb-2 text-center'}>{d.title}</h3>
+                            {//[0, 3, 5].includes(i) && <YAxisLabel height={height - MARGIN_BOTTOM}>Trust</YAxisLabel>
+                            }
                             <SmallLines
                                 data={data} width={width} xScale={xScale} yScale={yScale} lineGenerator={lineGenerator}
                                 highlighted={d.highlighted}
