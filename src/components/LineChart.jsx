@@ -26,7 +26,7 @@ const chartSettings = {
 
 export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadingPoint = false, width, height}) => {
 
-    console.log(annotations)
+
 
     const [containerRef, dms] = useChartDimensions(chartSettings)
 

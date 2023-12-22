@@ -57,6 +57,14 @@ const ANNOTATIONS = {
             textAnchor: 'middle',
             transform: 'translate(4px, -10px)'
         }
+    },{
+        x: 76000,
+        y: 31,
+        text: 'USA',
+        style: {
+            textAnchor: 'middle',
+            transform: 'translate(4px, 20px)'
+        }
     },
     ],
 }
@@ -92,9 +100,10 @@ export const ScatterPlotContainer = ({xKey = 'gdp'}) => {
             <div className={'w-full flex justify-center mt-4'}>
                 <div ref={target} className={'mx-2 mb-8 max-w-screen-md w-full aspect-[16/9] relative'}>
                     {xKey === 'gdp' ?
-                        <TextAnnotation></TextAnnotation> :
+                        <TextAnnotation className={'left-[64%] bottom-[8vw] md:bottom-[20%] text-right w-[100px] pr-0 pb-2 z-10 arrow-left-top max-md:invisible'}>Strong economy, but low trust</TextAnnotation> :
                         <>
-                            <TextAnnotation className={'left-[12vw] bottom-[40vw] md:bottom-[78%] text-right w-[122px] pr-0 pb-2 z-10'}></TextAnnotation>
+                            <TextAnnotation
+                                className={'left-[12vw] bottom-[40vw] md:bottom-[78%] text-right w-[122px] pr-0 pb-2 z-10 arrow-top-left '}></TextAnnotation>
                         </>}
                     <ScatterPlot data={data} xAcc={d => d[xKey]} xAxisLabel={X_LABEL[xKey]}
                                  annotations={ANNOTATIONS[xKey]} xDomain={xKey === 'gdp' ? [0, 121000] : [0, 10]}

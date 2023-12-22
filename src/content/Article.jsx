@@ -78,7 +78,6 @@ TextWrapper.propTypes = {children: PropTypes.node};
 
 export const ScrollyStep = ({step, stepIndex, currentStepIndex, progress}) => {
 
-    console.log(progress, currentStepIndex)
 
     return <div
         style={{
@@ -131,7 +130,7 @@ export const Article = () => {
     }
 
     const onStepExit = () => {
-        console.log('leave')
+
         //setProgress(0) // @todo not yet finished
     }
 
@@ -263,8 +262,13 @@ export const Article = () => {
                         target={'_blank'}>among more than 60 questions</a> - so I
                     consider it neglectable. For every country the latest available measure is taken.</ChartDescription>
                 <ChapterTitle>The cost of trust</ChapterTitle>
-                <TextParagraph>A look at the gross domestic product also shows that economic factors play a role.
-                    Countries with a high economic output tend to score better in the citizens rating.</TextParagraph>
+                <TextParagraph>Apart from politics, economic factors also come into play. This is revealed by a look at the
+                    gross domestic product. Nations
+                    boasting a robust economic output generally garner higher ratings in citizen satisfaction.
+                    This is exemplified by the trust frontrunners, <b>Luxembourg</b> and <b>Switzerland</b>, both
+                    characterized by robust economies. However the <b>United States</b> deviates from this trend, exhibiting
+                    a low trust score despite its high economic output.
+                </TextParagraph>
                 <ChartTitle>GDP per capita versus trust</ChartTitle>
             </TextWrapper>
             <ScatterPlotContainer/>
@@ -313,7 +317,8 @@ export const Article = () => {
                 </TextParagraph>
                 <TextParagraph>
                     The gross domestic product per capita is provided by <a
-                    href={'https://data.worldbank.org/indicator/NY.GDP.PCAP.CD'} target={'_blank'}>World Bank national accounts data, and OECD National Accounts data files.</a>.
+                    href={'https://data.worldbank.org/indicator/NY.GDP.PCAP.CD'} target={'_blank'}>World Bank national
+                    accounts data, and OECD National Accounts data files.</a>.
                 </TextParagraph>
                 <TextParagraph>
                     Disclaimer: the text of this article was improved with the help OpenAI's ChatGPT, asking it to

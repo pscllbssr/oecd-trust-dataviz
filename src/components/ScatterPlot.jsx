@@ -34,7 +34,7 @@ export const ScatterPlot = ({data, xAcc = d => d.gdp, xAxisLabel = '', annotatio
 
     useEffect(() => {
         if (data.length === 0) return
-        console.log(data)
+
         chartCanvas
             .selectAll(".point")
             .data(data)

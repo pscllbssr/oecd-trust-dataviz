@@ -7,7 +7,7 @@ import {LineChart} from "./LineChart";
 const ASPECT_RATIO = 0.666
 
 export const StickyFigure = ({progress, chartProps}) => {
-    console.log(chartProps)
+
     const [data, setData] = useState([]);
     const target = useRef(null)
     const [width, height] = useSize(target)
