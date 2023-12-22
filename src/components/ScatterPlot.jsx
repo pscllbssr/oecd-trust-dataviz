@@ -58,7 +58,7 @@ export const ScatterPlot = ({data, xAcc = d => d.gdp, xAxisLabel = '', annotatio
         <svg width={dms.width} height={dms.height}>
             <DataColorGradient id={'scatter-line-gradient'} />
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
-                  tickFormat={d => `${d}%`} ticks={5}/>
+                  tickFormat={d => `${d}%`} ticks={5} className={'axisLeft'}/>
             <GridLines scale={yScale} ticks={5} offsetY={dms.marginTop} axisFunc={axisLeft} offsetX={dms.marginLeft}
                        size={dms.boundedWidth}/>
             <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft} tickFormat={xTickFormat}

@@ -1,7 +1,7 @@
 import {useEffect, useRef} from "react";
 import {select} from "d3-selection";
 
-export const Axis = ({ scale, offsetX = 0, offsetY = 0, axisFunc, tickFormat = d => d, ticks = 10, removeDomain = false, tickSize = 4 }) => {
+export const Axis = ({ scale, offsetX = 0, offsetY = 0, axisFunc, tickFormat = d => d, ticks = 10, removeDomain = false, tickSize = 4, className = '' }) => {
 
     const axisRef = useRef()
 
@@ -13,5 +13,5 @@ export const Axis = ({ scale, offsetX = 0, offsetY = 0, axisFunc, tickFormat = d
         }
     }, [scale])
 
-    return <g ref={axisRef} transform={`translate(${offsetX}, ${offsetY})`} className={'text-stone-500 ' + axisFunc.name}></g>
+    return <g ref={axisRef} transform={`translate(${offsetX}, ${offsetY})`} className={'text-stone-500 ' + className}></g>
 }

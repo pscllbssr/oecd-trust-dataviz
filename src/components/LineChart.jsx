@@ -95,7 +95,7 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
             <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
                        size={dms.boundedWidth}/>
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
-                  tickFormat={d => `${d}%`} removeDomain={false} ticks={4} tickSize={0}/>
+                  tickFormat={d => `${d}%`} removeDomain={false} ticks={4} className={'axisLeft'}/>
             <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft}
                   axisFunc={axisBottom}/>
             <g className={'chart'} transform={`translate(${[
