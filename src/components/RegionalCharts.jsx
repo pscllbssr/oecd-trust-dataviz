@@ -7,6 +7,7 @@ import {select} from "d3-selection";
 import {curveLinear, line} from "d3-shape";
 import './RegionalCharts.css'
 import {YAxisLabel} from "./YAxisLabel.jsx";
+import {TextAnnotation} from "./TextAnnotation";
 
 const SmallMultiple = ({children}) => <div className={'aspect-[4/3] relative'}>{children}</div>
 
@@ -94,7 +95,10 @@ export const RegionalCharts = () => {
         }).then(data => setData(data))
     }, [])
 
-    return <div className={'overflow-x-scroll w-full max-w-screen-lg w-full md:overflow-x-visible mb-8 py-4 pl-12 pr-4'}>
+    return <div className={'overflow-x-scroll w-full max-w-screen-lg w-full md:overflow-x-visible mb-8 py-4 pl-12 pr-4 relative'}>
+        <TextAnnotation className={'top-[71%] left-[180px] md:left-[30%] text-center arrow-left-bottom arrow-right-bottom max-w-[120px]'}>Post-2008-crisis decrease and slow recovery</TextAnnotation>
+        <TextAnnotation className={'top-[7.5%] left-[220px] md:left-[38%] text-right arrow-right-bottom max-w-[140px] pr-1'}>Post-soviet countries with lower values</TextAnnotation>
+        <TextAnnotation className={'top-[38%] left-[550px] md:left-auto md:right-[5%] text-left arrow-left-bottom arrow-left-top max-w-[100px] min-w-[100px] pl-1 pb-2'}>Start low, but steady increase</TextAnnotation>
         <div className={'grid grid-cols-6 grid-rows-3 gap-x-6 gap-y-1 min-w-[600px]'}>
             {
                 regions.map((d, i) => (

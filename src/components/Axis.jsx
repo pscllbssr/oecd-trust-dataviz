@@ -13,5 +13,5 @@ export const Axis = ({ scale, offsetX = 0, offsetY = 0, axisFunc, tickFormat = d
         }
     }, [scale])
 
-    return <g ref={axisRef} transform={`translate(${offsetX}, ${offsetY})`} className={'text-stone-500'}></g>
+    return <g ref={axisRef} transform={`translate(${offsetX}, ${offsetY})`} className={'text-stone-500 ' + axisFunc.name}></g>
 }

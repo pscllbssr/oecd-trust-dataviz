@@ -1,0 +1,11 @@
+.axisLeft .domain{
+    stroke: url(#line-gradient);
+    stroke-width: 2;
+}
+
+text {
+    paint-order: stroke;
+    stroke-width: 5px;
+    stroke-linecap: butt;
+    stroke-linejoin: miter;
+}

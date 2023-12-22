@@ -3,6 +3,7 @@ import useSize from "@react-hook/size";
 import {csv} from "d3-fetch";
 import {LineChart} from "./LineChart.jsx";
 import {ScatterPlot} from "./ScatterPlot";
+import {TextAnnotation} from "./TextAnnotation";
 
 const ASPECT_RATIO = 0.666
 const X_LABEL = {
@@ -13,40 +14,55 @@ const X_LABEL = {
 const ANNOTATIONS = {
     'democracy_eiu': [
         {
-            x: 3,
-            y: 50,
+            x: 3.24,
+            y: 46,
             text: 'RUS',
-            style: {textAnchor: 'start',
-                transform: 'translate(-3px, -12px)'}
+            style: {
+                textAnchor: 'middle',
+                transform: 'translate(-3px, -12px)'
+            }
         },
         {
-            x: 4.5,
-            y: 53,
+            x: 4.35,
+            y: 43,
             text: 'TUR',
-            style: {textAnchor: 'start',
-                transform: 'translate(-3px, -12px)'}
+            style: {
+                textAnchor: 'middle',
+                transform: 'translate(-3px, -12px)'
+            }
+        },
+        {
+            x: 5.25,
+            y: 53,
+            text: 'MEX',
+            style: {
+                textAnchor: 'middle',
+                transform: 'translate(-3px, -10px)'
+            }
         }
     ],
     'gdp': [{
-        x: 117500,
-        y: 73,
+        x: 112000,
+        y: 78,
         text: 'LUX',
-        style: {textAnchor: 'middle',
-            transform: 'translate(0, -15px)'}
+        style: {
+            textAnchor: 'middle',
+            transform: 'translate(4px, -11px)'
+        }
     }, {
-        x: 86000,
-        y: 82,
+        x: 91000,
+        y: 84,
         text: 'CHE',
         style: {
             textAnchor: 'middle',
-            transform: 'translate(0px, -10px)'
+            transform: 'translate(4px, -10px)'
         }
     },
     ],
 }
 
 const X_FORMAT = {
-    'gdp': d => `${d/1000}k`,
+    'gdp': d => `${d / 1000}k`,
     'democracy_eiu': d => `${d}`
 }
 
@@ -75,7 +91,14 @@ export const ScatterPlotContainer = ({xKey = 'gdp'}) => {
             </div>*/}
             <div className={'w-full flex justify-center mt-4'}>
                 <div ref={target} className={'mx-2 mb-8 max-w-screen-md w-full aspect-[16/9] relative'}>
-                    <ScatterPlot data={data} xAcc={d => d[xKey]} xAxisLabel={X_LABEL[xKey]} annotations={ANNOTATIONS[xKey]} xDomain={xKey === 'gdp' ? [0, 121000] : [0,10]} xTickFormat={X_FORMAT[xKey]}/>
+                    {xKey === 'gdp' ?
+                        <TextAnnotation></TextAnnotation> :
+                        <>
+                            <TextAnnotation className={'left-[12vw] bottom-[40vw] md:bottom-[78%] text-right w-[122px] pr-0 pb-2 z-10'}></TextAnnotation>
+                        </>}
+                    <ScatterPlot data={data} xAcc={d => d[xKey]} xAxisLabel={X_LABEL[xKey]}
+                                 annotations={ANNOTATIONS[xKey]} xDomain={xKey === 'gdp' ? [0, 121000] : [0, 10]}
+                                 xTickFormat={X_FORMAT[xKey]}/>
                 </div>
             </div>
         </>)

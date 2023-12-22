@@ -52,7 +52,9 @@ export const ScatterPlot = ({data, xAcc = d => d.gdp, xAxisLabel = '', annotatio
 
     return <div ref={containerRef} className={'absolute inset-0'}>
         <XAxisLabel>{xAxisLabel}</XAxisLabel>
-        <YAxisLabel>Trust</YAxisLabel>
+        <YAxisLabel height={dms.boundedHeight}><div className={'flex justify-between'}><span
+            className={'text-[#b35806] pt-0 font-light'}>← Low</span><span>Trust</span><span
+            className={'text-[#313695] pb-2 font-light'}>High →</span></div></YAxisLabel>
         <svg width={dms.width} height={dms.height}>
             <DataColorGradient id={'scatter-line-gradient'} />
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
@@ -69,7 +71,7 @@ export const ScatterPlot = ({data, xAcc = d => d.gdp, xAxisLabel = '', annotatio
                 dms.marginLeft,
                 dms.marginTop
             ].join(",")})`}>{annotations.map(a => <text x={xScale(a.x)} y={yScale(a.y)}
-                                                        style={a.style}>{a.text}</text>)}</g>
+                                                        style={a.style} className={'stroke-stone-50'}>{a.text}</text>)}</g>
         </svg>
     </div>
 }

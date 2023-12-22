@@ -13,6 +13,7 @@ import {GridLines} from "./GridLines.jsx";
 import {YAxisLabel} from "./YAxisLabel.jsx";
 import {XAxisLabel} from "./XAxisLabel.jsx";
 import {DataColorGradient} from "./DataColorGradient.jsx";
+import './LineChart.css'
 
 const chartSettings = {
     "marginTop": 5,
@@ -20,6 +21,8 @@ const chartSettings = {
     "marginBottom": 43,
     "marginLeft": 50
 }
+
+
 
 export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadingPoint = false, width, height}) => {
 
@@ -80,18 +83,19 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
 
     }, [data, width])
 
-    return <div ref={containerRef} style={{height: height, width: width}} className={'relative'}>
+    return <div ref={containerRef} style={{height: height, width: width}} className={'relative line-chart-intro'}>
         <XAxisLabel>Year</XAxisLabel>
         <YAxisLabel height={dms.boundedHeight}>
             <div className={'flex justify-between'}><span
-                className={'text-[#b35806] pt-4 font-light'}>← Low</span><span>Trust</span><span className={'text-[#313695] pb-4 font-light'}>High →</span></div>
+                className={'text-[#b35806] pt-4 font-light'}>← Low</span><span>Trust</span><span
+                className={'text-[#313695] pb-4 font-light'}>High →</span></div>
         </YAxisLabel>
         <svg width={dms.width} height={dms.height}>
             <DataColorGradient/>
             <GridLines scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft} ticks={4}
                        size={dms.boundedWidth}/>
             <Axis scale={yScale} offsetY={dms.marginTop} offsetX={dms.marginLeft} axisFunc={axisLeft}
-                  tickFormat={d => `${d}%`} removeDomain={true} ticks={4} tickSize={0}/>
+                  tickFormat={d => `${d}%`} removeDomain={false} ticks={4} tickSize={0}/>
             <Axis scale={xScale} offsetY={dms.boundedHeight + dms.marginTop} offsetX={dms.marginLeft}
                   axisFunc={axisBottom}/>
             <g className={'chart'} transform={`translate(${[
@@ -103,7 +107,7 @@ export const LineChart = ({data = [], highlight = [], annotations = [], hasLeadi
                 dms.marginTop
             ].join(",")})`}>{annotations.map(a => <text x={xScale(a.x)} y={yScale(a.y)}
                                                         style={a.style}
-                                                        className={'text-sm font-medium'}>{a.text}</text>)} </g>
+                                                        className={'text-sm font-medium stroke-stone-50'}>{a.text}</text>)} </g>
         </svg>
     </div>
 
