@@ -155,7 +155,7 @@ export const Article = () => {
                 <TextParagraph>A seemingly normal Tuesday evening in early autumn 2006. The thermometer in Warsaw marked
                     22.6° degrees in the afternoon, but the air is slowly cooling down. Quite a few Poles are probably
                     drawn indoors, some switching on their television. Those tuned to the private news channel TVN24
-                    were thrust
+                    are thrust
                     into the midst of a scandal. </TextParagraph>
                 <ChapterTitle>The government on a shopping spree in parliament
                 </ChapterTitle>

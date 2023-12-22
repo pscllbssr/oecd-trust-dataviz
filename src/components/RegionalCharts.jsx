@@ -105,7 +105,7 @@ export const RegionalCharts = () => {
                     <div className={`col-span-2 ${d.xOffset} region-${i}`} ref={target}>
                         <SmallMultiple>
                             <h3 className={'pb-2 text-center'}>{d.title}</h3>
-                            {//[0, 3, 5].includes(i) && <YAxisLabel height={height - MARGIN_BOTTOM}>Trust</YAxisLabel>
+                            {[0, 3, 5].includes(i) && <div className={'absolute -left-12 h-full bottom-1 top-4'}><YAxisLabel height={height - MARGIN_BOTTOM}>Trust</YAxisLabel></div>
                             }
                             <SmallLines
                                 data={data} width={width} xScale={xScale} yScale={yScale} lineGenerator={lineGenerator}
